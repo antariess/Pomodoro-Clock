@@ -10,24 +10,35 @@
 //seconds
 const $secsWork = $("#secsWork")
 const $secsWorkNum = parseInt($secsWork.html(), 10)
-let secsWorkCount = $secsWorkNum
-const count = function(){    
-    if (secsWorkCount <= 0) {
-        clearTimeout(intervalSec)
-    }
-    $secsWork.html(secsWorkCount)
-    secsWorkCount--
-}
-var intervalSec;
+
 //minutes
 const $minsWork = $("#minsWork")
 const $minsWorkNum = parseInt($minsWork.html(), 10)
-
+let seconds = $minsWorkNum * 60
+let secTracker = 59 
+let minsTracker = $minsWorkNum 
+const count = function(){ 
+    if (seconds <= 0) {
+        clearTimeout(intervalSec)
+        return
+    }
+    if (seconds % 60 == 0){
+        minsTracker -= 1
+        $minsWork.html(minsTracker)
+        secTracker = 59
+        $secsWork.html(secTracker)
+    }
+    $secsWork.html(secTracker)
+    secTracker--
+    seconds--
+    console.log(seconds)
+}
+var intervalSec;
 
 //buttons
 const $play = $("#play")
 $play.click(function(){
-    intervalSec = setInterval(count, 1000)
+    intervalSec = setInterval(count, 100)
 })
 
 const $pause = $("#pause")
