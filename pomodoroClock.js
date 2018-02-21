@@ -1,56 +1,57 @@
 // - and + buttons to add a minute to timer 
 
 //WORK
-let intervalState = false
+let isIntervalActive = false
 const $secsWork = $("#secsWork")
 const $minsWork = $("#minsWork")
+const $secsBreak = $("#secsBreak")
+const $minsBreak = $("#minsBreak")
 const parse = function(span){
     return parseInt(span.html(), 10)
 }
 let seconds; 
 let minsTracker; 
-let secTracker = 59 
+let secsTracker = 59 
+let intervalSec;
 const count = function(){ 
-    intervalState = true
+    isIntervalActive = true
     if (seconds <= 0) {
-        clearTimeout(intervalSec)
-        intervalState = false
+        clearInterval(intervalSec)
+        isIntervalActive = false
         return
     }
     if (seconds % 60 == 0){
         minsTracker -= 1
         $minsWork.html(minsTracker)
-        secTracker = 59
-        $secsWork.html(secTracker)
+        secsTracker = 59
+        $secsWork.html(secsTracker)
     }
-    $secsWork.html(secTracker)
-    secTracker--
+    $secsWork.html(secsTracker)
+    secsTracker--
     seconds--
     console.log(seconds)
 }
-var intervalSec;
 
 //increase decreace time
 const $incrWork = $("#incrWork")
 const $decrWork = $("#decrWork")
 const $incrBreak = $("#incrBreak")
 const $decrBreak = $("#decrBreak")
-const increase = function(){
-    if (!intervalState){
-        if (parse($minsWork) < 59){
-            $minsWork.html(parse($minsWork) + 1)
-        }
+const increase = function(span){
+    if (!isIntervalActive && parse(span) < 59){
+        span.html(parse(span) + 1)
     }    
 }
-const decrease = function(){
-    if (!intervalState){
-        if(parse($minsWork) > 0){
-            $minsWork.html(parse($minsWork) - 1)
-        }
-    }    
+const decrease = function(span){
+    if (!isIntervalActive && parse(span) > 0){
+        span.html(parse(span) - 1)
+    }   
 }
-$incrWork.click(increase)
-$decrWork.click(decrease)
+$incrWork.click(() => increase($minsWork))
+$decrWork.click(() => decrease($minsWork))
+$incrBreak.click(() => increase($minsBreak))
+$decrBreak.click(() => decrease($minsBreak))
+
 
 //buttons
 const $play = $("#play")
@@ -62,14 +63,14 @@ $play.click(function(){
 
 const $pause = $("#pause")
 $pause.click(function(){
-    intervalState = false
-    clearTimeout(intervalSec)
+    isIntervalActive = false
+    clearInterval(intervalSec)
 })
 
 const $reset = $("#reset")
 $reset.click(function(){
-    intervalState = false
-    clearTimeout(intervalSec)
+    isIntervalActive = false
+    clearInterval(intervalSec)
     $secsWork.html(00)
     $minsWork.html(25)
 })
