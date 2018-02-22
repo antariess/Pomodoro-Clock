@@ -1,5 +1,33 @@
 /* icons for play, payse, sop, reset, - and + */
-
+@font-face {font-family: DS-DIGI; src: url('dsdigi.TTF');}
 body {
+    background-color:darkgrey;    
+    font-family: DS-DIGI;
+    font-size: 3em;
+    text-align: center;
+}
+
+.clock {
     background-color: coral;
+    margin: 100px auto;
+    padding: 20px;
+    width: 300px;
+    height: 300px;
+    border: 13px solid black;
+    border-radius: 50%;
+}
+
+.actionButtons {
+    margin: 10px auto;
+}
+
+.displayClock {
+    background-color: darkgrey;
+    border: 2px solid black;
+    width: 70px;
+    height: 70px;
+    border-radius: 10%;
+    display: inline-block;
+    font-size: 1.5em;
+    margin: 5px;
 }
