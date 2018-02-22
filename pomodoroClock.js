@@ -4,8 +4,6 @@
 let isIntervalActive = false
 const $secsWork = $("#secsWork")
 const $minsWork = $("#minsWork")
-const $secsBreak = $("#secsBreak")
-const $minsBreak = $("#minsBreak")
 const parse = function(span){
     return parseInt(span.html(), 10)
 }
@@ -18,6 +16,7 @@ const count = function(){
     if (seconds <= 0) {
         clearInterval(intervalSec)
         isIntervalActive = false
+        intervalSecBreak = setInterval(countBreak, 100)
         return
     }
     if (seconds % 60 == 0){
@@ -30,6 +29,32 @@ const count = function(){
     secsTracker--
     seconds--
     console.log(seconds)
+}
+
+//BREAK
+const $secsBreak = $("#secsBreak")
+const $minsBreak = $("#minsBreak")
+let secondsBreak; 
+let minsTrackerBreak; 
+let secsTrackerBreak = 59 
+let intervalSecBreak;
+const countBreak = function(){ 
+    isIntervalActive = true
+    if (secondsBreak <= 0) {
+        clearInterval(intervalSecBreak)
+        isIntervalActive = false
+        return
+    }
+    if (secondsBreak % 60 == 0){
+        minsTrackerBreak -= 1
+        $minsBreak.html(minsTrackerBreak)
+        secsTrackerBreak = 59
+        $secsBreak.html(secsTrackerBreak)
+    }
+    $secsBreak.html(secsTrackerBreak)
+    secsTrackerBreak--
+    secondsBreak--
+    console.log(secondsBreak)
 }
 
 //increase decreace time
@@ -57,7 +82,9 @@ $decrBreak.click(() => decrease($minsBreak))
 const $play = $("#play")
 $play.click(function(){
     seconds = parse($minsWork) * 60 + parse($secsWork); 
+    secondsBreak = parse($minsBreak) * 60 + parse($secsBreak)
     minsTracker = parse($minsWork)
+    minsTrackerBreak = parse($minsBreak)
     intervalSec = setInterval(count, 100)
 })
 
@@ -65,12 +92,15 @@ const $pause = $("#pause")
 $pause.click(function(){
     isIntervalActive = false
     clearInterval(intervalSec)
+    clearInterval(intervalSecBreak)
 })
 
 const $reset = $("#reset")
 $reset.click(function(){
     isIntervalActive = false
     clearInterval(intervalSec)
-    $secsWork.html(00)
+    $secsWork.html(0)
     $minsWork.html(25)
+    $secsBreak.html(0)
+    $minsBreak.html(5)
 })
