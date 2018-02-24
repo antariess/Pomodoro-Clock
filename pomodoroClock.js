@@ -1,5 +1,3 @@
-// - and + buttons to add a minute to timer 
-
 //WORK
 let isIntervalActive = false
 const $secsWork = $("#secsWork")
@@ -16,7 +14,7 @@ const count = function(){
     if (seconds <= 0) {
         clearInterval(intervalSec)
         isIntervalActive = false
-        intervalSecBreak = setInterval(countBreak, 100)
+        intervalSecBreak = setInterval(countBreak, 1000)
         return
     }
     if (seconds % 60 == 0){
@@ -85,7 +83,7 @@ $play.click(function(){
     secondsBreak = parse($minsBreak) * 60 + parse($secsBreak)
     minsTracker = parse($minsWork)
     minsTrackerBreak = parse($minsBreak)
-    intervalSec = setInterval(count, 100)
+    intervalSec = setInterval(count, 1000)
 })
 
 const $pause = $("#pause")
